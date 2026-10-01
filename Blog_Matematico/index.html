@@ -33,7 +33,7 @@
             border: 1px solid #111a25; /*Color del bordeado*/
         }
 
-        /* TITULO PRINCIPAL: Cambia color o font-size para personalizar la cabecera */
+        /* TITULO: aca cambio el color o font-size para personalizar la cabecera */
         h1 {
             font-size: 1.75rem;
             font-weight: 700;
@@ -54,7 +54,7 @@
             transform: scale(0.99);
         }
 
-        /* ENCABEZADOS DESPLEGABLES: Estilo de las barras clicables */
+        /* ENCABEZADOS DESPLEGABLES: Estilo de las barras clicables como su color y eso */
         .seccion-header {
             display: flex;
             align-items: center;
@@ -87,7 +87,7 @@
             transform: rotate(-90deg);
         }
 
-        /* TITULOS FIJOS: Para secciones que no se ocultan */
+        /* TITULOS FIJADOS: Para secciones que no se ocultan como el titulo de la tabla  */
         .seccion-titulo-fijo {
             font-weight: 600;
             font-size: 0.95rem;
@@ -107,7 +107,7 @@
             color: #94a3b8;
         }
 
-        /* LISTAS Y ELEMENTOS: Estilos de los items interactivos */
+        /* Estilos de los items interactivos */
         ul, ol {
             padding-left: 0;
             list-style: none;
@@ -133,7 +133,7 @@
             transform: translateX(2px);
         }
 
-        /* TABLAS: Estilos visuales de la tabla de formulas */
+        /* TABLA: Estilos visuales de la tabla */
         table {
             width: 100%;
             border-collapse: separate;
@@ -182,12 +182,12 @@
             color: #0f172a;
         }
 
-        /* ESTADOS DINAMICOS: Clases que activa JavaScript al hacer clic */
+        /* ESTADOS DINAMICOS */
         .oculto {
             display: none;
         }
 
-        /* Para cambiar el color de resaltado edita background-color y color aqui */
+        /* Para cambiar el color de resaltado  */
         .resaltado {
             background-color: #f0fdf4 !important;
             border-color: #bbf7d0 !important;
@@ -204,15 +204,15 @@
 <body>
 
     <main class="container">
-        <!-- TITULO: Al hacer clic llama a cambiarColorTitulo(). Puedes editar el texto directamente -->
+        <!-- TITULO -->
         <h1 id="titulo" onclick="cambiarColorTitulo()">Blog Matematico Interactivo</h1>
 
-        <!-- SECCION DESPLEGABLE 1: Muestra/oculta la lista con id="conceptos" -->
+        <!-- SECCION DESPLEGABLE 1 -->
         <div class="seccion-header" onclick="alternarLista('conceptos', this)">
             <span>Conceptos Basicos</span>
             <span class="arrow">▼</span>
         </div>
-        <!-- Para agregar mas conceptos, copia un <li> y cambia el texto -->
+        <!-- Para agregar mas conceptos -->
         <ul id="conceptos">
             <li onclick="resaltarElemento(this)"><strong>Algebra:</strong> Manipulacion de simbolos y ecuaciones.</li>
             <li onclick="resaltarElemento(this)"><strong>Geometria:</strong> Estudio de las propiedades de figuras y espacios.</li>
@@ -220,7 +220,7 @@
             <li onclick="resaltarElemento(this)"><strong>Estadistica:</strong> Analisis y tratamiento de datos.</li>
         </ul>
 
-        <!-- SECCION TABLA: Estructura fija de datos -->
+        <!-- SECCION TABLA -->
         <div class="seccion-titulo-fijo">
             <span>Tabla de Formulas</span>
             <span class="hint-text">haz clic en una celda</span>
@@ -232,7 +232,7 @@
                     <th>Formula</th>
                 </tr>
             </thead>
-            <!-- Para agregar mas filas, duplica un bloque <tr>...</tr> -->
+            <!-- Para agregar mas filas tengo que agregar otro <tr>  </tr> -->
             <tbody>
                 <tr>
                     <td onclick="resaltarElemento(this)">Area del triangulo</td>
@@ -249,7 +249,7 @@
             </tbody>
         </table>
 
-        <!-- SECCION DESPLEGABLE 2: Muestra/oculta la lista numerada id="pasos" -->
+        <!-- SECCION DESPLEGABLE 2 -->
         <div class="seccion-header" onclick="alternarLista('pasos', this)">
             <span>Pasos para resolver un problema</span>
             <span class="arrow">▼</span>
@@ -262,22 +262,22 @@
         </ol>
     </main>
 
-    <!-- LOGICA JAVASCRIPT: Controla las interacciones al hacer clic -->
+    <!-- JAVASCRIPT -->
     <script>
-        // Cambia el color del titulo alternando la clase .cambio-color
+        // Cambia el color del titulo 
         function cambiarColorTitulo() {
             var titulo = document.getElementById('titulo');
             titulo.classList.toggle('cambio-color');
         }
 
-        // Alterna la visibilidad de una lista agregando/quitando la clase .oculto
+        // Alterna la visibilidad de una lista
         function alternarLista(id, headerElem) {
             var lista = document.getElementById(id);
             lista.classList.toggle('oculto');
             headerElem.classList.toggle('cerrado');
         }
 
-        // Marca/desmarca un elemento cambiando su fondo con la clase .resaltado
+        // Marca/desmarca un elemento cambiando su fondo 
         function resaltarElemento(elemento) {
             elemento.classList.toggle('resaltado');
         }
