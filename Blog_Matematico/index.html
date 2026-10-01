@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Matematico Interactivo</title>
+    <style>
+        /* ESTILOS */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
+            background-color: #7092BE; /* color del fondo principal */
+            color: #334155;
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* PRINCIPAL:aca cambio cosas para hacer la tarjeta mas ancha o angosta */
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: #ffffff; /*Color del fondo secundario*/
+            padding: 36px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #111a25; /*Color del bordeado*/
+        }
+
+        /* TITULO PRINCIPAL: Cambia color o font-size para personalizar la cabecera */
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.75rem;
+            cursor: pointer;
+            display: inline-block;
+            transition: color 0.2s ease, transform 0.1s ease;
+            user-select: none;
+        }
+
+        h1:hover {
+            opacity: 0.85;
+        }
+
+        h1:active {
+            transform: scale(0.99);
+        }
+
+        /* ENCABEZADOS DESPLEGABLES: Estilo de las barras clicables */
+        .seccion-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f1f5f9;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin-top: 1.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .seccion-header:hover {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .seccion-header .arrow {
+            font-size: 0.75rem;
+            color: #64748b;
+            transition: transform 0.25s ease;
+        }
+
+        .seccion-header.cerrado .arrow {
+            transform: rotate(-90deg);
+        }
+
+        /* TITULOS FIJOS: Para secciones que no se ocultan */
+        .seccion-titulo-fijo {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #475569;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hint-text {
+            font-size: 0.75rem;
+            font-weight: normal;
+            color: #94a3b8;
+        }
+
+        /* LISTAS Y ELEMENTOS: Estilos de los items interactivos */
+        ul, ol {
+            padding-left: 0;
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            padding: 10px 14px;
+            margin: 6px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #334155;
+            background-color: #ffffff;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        li:hover {
+            background-color: #f8fafc;
+            border-color: #cbd5e1;
+            transform: translateX(2px);
+        }
+
+        /* TABLAS: Estilos visuales de la tabla de formulas */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0.5rem 0 1.5rem 0;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:hover {
+            background-color: #f8fafc;
+        }
+
+        .formula-tag {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background-color: #f1f5f9;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #0f172a;
+        }
+
+        /* ESTADOS DINAMICOS: Clases que activa JavaScript al hacer clic */
+        .oculto {
+            display: none;
+        }
+
+        /* Para cambiar el color de resaltado edita background-color y color aqui */
+        .resaltado {
+            background-color: #f0fdf4 !important;
+            border-color: #bbf7d0 !important;
+            color: #15803d !important;
+            font-weight: 500;
+        }
+
+        /* Color al hacer clic en el titulo principal */
+        .cambio-color {
+            color: #2563eb !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        <!-- TITULO: Al hacer clic llama a cambiarColorTitulo(). Puedes editar el texto directamente -->
+        <h1 id="titulo" onclick="cambiarColorTitulo()">Blog Matematico Interactivo</h1>
+
+        <!-- SECCION DESPLEGABLE 1: Muestra/oculta la lista con id="conceptos" -->
+        <div class="seccion-header" onclick="alternarLista('conceptos', this)">
+            <span>Conceptos Basicos</span>
+            <span class="arrow">▼</span>
+        </div>
+        <!-- Para agregar mas conceptos, copia un <li> y cambia el texto -->
+        <ul id="conceptos">
+            <li onclick="resaltarElemento(this)"><strong>Algebra:</strong> Manipulacion de simbolos y ecuaciones.</li>
+            <li onclick="resaltarElemento(this)"><strong>Geometria:</strong> Estudio de las propiedades de figuras y espacios.</li>
+            <li onclick="resaltarElemento(this)"><strong>Calculo:</strong> Analisis del cambio y del movimiento.</li>
+            <li onclick="resaltarElemento(this)"><strong>Estadistica:</strong> Analisis y tratamiento de datos.</li>
+        </ul>
+
+        <!-- SECCION TABLA: Estructura fija de datos -->
+        <div class="seccion-titulo-fijo">
+            <span>Tabla de Formulas</span>
+            <span class="hint-text">haz clic en una celda</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tema</th>
+                    <th>Formula</th>
+                </tr>
+            </thead>
+            <!-- Para agregar mas filas, duplica un bloque <tr>...</tr> -->
+            <tbody>
+                <tr>
+                    <td onclick="resaltarElemento(this)">Area del triangulo</td>
+                    <td onclick="resaltarElemento(this)"><code class="formula-tag">(Base x Altura) / 2</code></td>
+                </tr>
+                <tr>
+                    <td onclick="resaltarElemento(this)">Teorema de Pitagoras</td>
+                    <td onclick="resaltarElemento(this)"><code class="formula-tag">a2 + b2 = c2</code></td>
+                </tr>
+                <tr>
+                    <td onclick="resaltarElemento(this)">Perimetro del circulo</td>
+                    <td onclick="resaltarElemento(this)"><code class="formula-tag">2 x pi x r</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- SECCION DESPLEGABLE 2: Muestra/oculta la lista numerada id="pasos" -->
+        <div class="seccion-header" onclick="alternarLista('pasos', this)">
+            <span>Pasos para resolver un problema</span>
+            <span class="arrow">▼</span>
+        </div>
+        <ol id="pasos">
+            <li onclick="resaltarElemento(this)">1. Comprender el problema planteado.</li>
+            <li onclick="resaltarElemento(this)">2. Trazar un plan o seleccionar la formula.</li>
+            <li onclick="resaltarElemento(this)">3. Ejecutar las operaciones requeridas.</li>
+            <li onclick="resaltarElemento(this)">4. Revisar y verificar la solucion.</li>
+        </ol>
+    </main>
+
+    <!-- LOGICA JAVASCRIPT: Controla las interacciones al hacer clic -->
+    <script>
+        // Cambia el color del titulo alternando la clase .cambio-color
+        function cambiarColorTitulo() {
+            var titulo = document.getElementById('titulo');
+            titulo.classList.toggle('cambio-color');
+        }
+
+        // Alterna la visibilidad de una lista agregando/quitando la clase .oculto
+        function alternarLista(id, headerElem) {
+            var lista = document.getElementById(id);
+            lista.classList.toggle('oculto');
+            headerElem.classList.toggle('cerrado');
+        }
+
+        // Marca/desmarca un elemento cambiando su fondo con la clase .resaltado
+        function resaltarElemento(elemento) {
+            elemento.classList.toggle('resaltado');
+        }
+    </script>
+</body>
+</html> 
